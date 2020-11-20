@@ -26,9 +26,20 @@ all: pi host
 
 ############ Format #############
 
-.PHONY: fmt
-fmt:
+.PHONY: fmt-md
+fmt-md:
+	@find *.md | xargs markdownfmt -w
+
+.PHONY: fmt-clang
+fmt-clang:
 	@find * -type f -name '*.[c,h]' | grep -v out | xargs clang-format -i
+
+.PHONY: fmt-go
+fmt-go:
+	@find -type f -name go.mod | xargs dirname  | xargs -I X bash -c "cd X && go fmt ./..."
+
+.PHONY: fmt
+fmt: fmt-md fmt-clang fmt-go
 
 ############ Raspberry Pi ##########
 PI_TOOLCHAIN=$(shell pwd)/src/cmake/toolchains/pi.toolchain
