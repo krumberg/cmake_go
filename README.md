@@ -14,7 +14,7 @@ Support for building for the host platform and Raspberry PI (ARM) is provided.
 ASAN
 ----
 
-In addition to binding together Go and C/C++ this project also incorporate ASAN support.
+In addition to binding together Go and C/C++ this project also incorporates ASAN support.
 
 Examples
 --------
@@ -33,10 +33,14 @@ A small Go program that invokes some C-code and leaks memory. This is detected b
 
 A small Go program that invokes some C-code and reads from a NULL pointer. This is detected by ASAN.
 
-Building and running
---------------------
+Building and running (Ubuntu/Debian)
+------------------------------------
 
-Make sure that a recent version of Go is installed (https://tip.golang.org/dl/\)
+Install a recent version of Go (https://tip.golang.org/dl/\)
+
+$ apt install clang-11 build-essential gcc-8-arm-linux-gnueabihf
+
+$ go get -u github.com/shurcooL/markdownfmt
 
 Build
 
