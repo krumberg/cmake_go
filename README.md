@@ -19,7 +19,7 @@ In addition to binding together Go and C/C++ this project also incorporates ASAN
 Examples
 --------
 
-The "examples" directory contains three examples
+The "examples" directory contains several examples
 
 -	goodprogram
 
@@ -29,9 +29,13 @@ A small Go program that invokes some C-code.
 
 A small Go program that invokes some C-code and leaks memory. This is detected by ASAN.
 
--	segfaultprogram
+-	nullrefprogram
 
 A small Go program that invokes some C-code and reads from a NULL pointer. This is detected by ASAN.
+
+-	outofboundsprogram
+
+A small Go program that invokes some C-code and writes out of bounds. This is detected by ASAN.
 
 Building and running (Ubuntu/Debian)
 ------------------------------------
@@ -52,4 +56,6 @@ $ ./out/host/examples/goodprogram/goodprogram
 
 $ ./out/host/examples/leakyprogram/leakyprogram
 
-$ ./out/host/examples/segfaultyprogram/segfaultyprogram
+$ ./out/host/examples/segfaultyprogram/nullrefprogram
+
+$ ./out/host/examples/segfaultyprogram/outofboundsprogram

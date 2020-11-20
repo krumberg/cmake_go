@@ -19,7 +19,8 @@
 # SOFTWARE.
 
 set(go_files
-  go/segfaultyprogram/main.go
+  go/nullrefprogram/main.go
+  go/outofboundsprogram/main.go
 )
 
 set(cgo_deps

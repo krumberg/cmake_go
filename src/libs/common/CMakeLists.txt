@@ -20,6 +20,7 @@
 
 add_library(common
   src/mylog.c
+  src/myarray.c
 )
 
 target_include_directories(common PUBLIC include)
