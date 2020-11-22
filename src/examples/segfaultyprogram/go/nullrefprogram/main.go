@@ -37,5 +37,4 @@ func main() {
 	defer C.stuff_destroy(s)
 
 	fmt.Println("Value is", C.stuff_get_value(s))
-
 }

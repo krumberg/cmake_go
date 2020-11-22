@@ -36,5 +36,4 @@ func main() {
 	s := C.stuff_create(1234)
 
 	fmt.Println("Value is", C.stuff_get_value(s))
-
 }
