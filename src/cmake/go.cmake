@@ -39,23 +39,30 @@ macro(add_cgo_executable GO_MOD_NAME GO_FILES CGO_DEPS GO_BIN)
   cgo_fetch_cflags_and_ldflags(${CGO_DEPS})
   cgo_build_envs(${GO_BIN})
 
-  set(go_deps "")
-  list(APPEND go_deps ${${GO_FILES}})
-  list(APPEND go_deps ${CGO_DEPS_HANDLED})
+  set(CGO_BUILT_FLAG ${CMAKE_CURRENT_BINARY_DIR}/${GO_MOD_NAME}.cgo.module)
+  add_custom_command(
+    OUTPUT ${CGO_BUILT_FLAG}
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    COMMAND echo Building CGO modules for ${GO_BIN}
+    COMMAND ${CMAKE_COMMAND} -E remove ${CGO_BUILT_FLAG}
+    COMMAND env ${CGO_ENVS} go build -a -o ${GO_BIN} ./...
+    COMMAND touch ${CGO_BUILT_FLAG}
+    DEPENDS ${CGO_DEPS_HANDLED}
+  )
+  add_custom_target(${GO_MOD_NAME}_cgo ALL
+    DEPENDS ${CGO_BUILT_FLAG}
+  )
 
-  set(GO_BUILT_FLAG ${CMAKE_CURRENT_BINARY_DIR}/${GO_MOD_NAME}.go.module)
-
+  set(GO_BUILT_FLAG  ${CMAKE_CURRENT_BINARY_DIR}/${GO_MOD_NAME}.go.module)
   add_custom_command(
     OUTPUT ${GO_BUILT_FLAG}
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-    COMMAND echo Building ${GO_BIN}
-    COMMAND ${CMAKE_COMMAND} -E remove ${GO_BUILT_FLAG}
-    COMMAND env ${CGO_ENVS} go build -a -o ${GO_BIN} ./...
+    COMMAND echo Building GO modules for ${GO_BIN}
+    COMMAND env ${CGO_ENVS} go build -o ${GO_BIN} ./...
     COMMAND touch ${GO_BUILT_FLAG}
-    DEPENDS ${go_deps}
+    DEPENDS ${CGO_BUILT_FLAG} ${${GO_FILES}}
   )
-
-  add_custom_target(${GO_MOD_NAME}_exe ALL
+  add_custom_target(${GO_MOD_NAME}_go ALL
     DEPENDS ${GO_BUILT_FLAG}
   )
 
