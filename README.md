@@ -11,6 +11,11 @@ Cross compilation
 
 Support for building for the host platform and Raspberry PI (ARM) is provided.
 
+Static code analysis
+--------------------
+
+go.cmake executes a number of linters from golangci-lint during buildtime.
+
 ASAN
 ----
 
